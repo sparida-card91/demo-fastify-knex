@@ -44,13 +44,13 @@ const routes = [{
     {
         method: 'GET',
         url: '/api/messages/:id',
-        schema: getMessageValidation,
+        //schema: getMessageValidation,
         handler: messageController.getMessage
     },
     {
         method: 'POST',
         url: '/api/messages',
-        schema: addMessageValidation,
+        //schema: addMessageValidation,
         handler: messageController.addMessage
     },
     {

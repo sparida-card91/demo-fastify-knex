@@ -1,3 +1,4 @@
+
 const knex = require('knex')({
     client: 'mysql2',
     connection: {
@@ -9,70 +10,60 @@ const knex = require('knex')({
     }
   });
 
-// let messages = [
-//     {
-//         id: 1,
-//         message: 'Test Message 1'
-//     },
-//     {
-//         id: 2,
-//         message: 'Test Message 2'
-//     },
-//     {
-//         id: 3,
-//         message: 'Test Message 3'
-//     }
-// ]
-
 const getAllMessages = async (req, reply) => {
-    return knex('messages_table').select()
+    reply.send(
+        await knex('messages_table').select()
+     )
 }
 
 const getMessage = async (req, reply) => {
-    //const id = Number(req.params.id)
-    //console.log("Hello World", id)
-    return knex('messages_table').select()
+    const id = Number(req.params.id)
+    reply.send(
+       await knex('messages_table').select().where('id', id)
+    )
 }
 
 const addMessage = async (req, reply) => {
-    const id = messages.length + 1
-    const newMessage = {
-        id,
-        message: req.body.message
-    }
-
-    messages.push(newMessage)
-    return newMessage
+    let newMessage;
+    knex('messages_table').count('id as CNT')
+      .then((total) => {
+        let id = total[0].CNT + 1
+        console.log("Hello Everyone", id)
+        newMessage = {
+            id,
+            message: req.body.message
+        }
+        return knex('messages_table').insert(newMessage)
+      })
+      .then((result) => {
+        reply.send(result)
+      })
+      .catch((err) => {
+          console.log(err)
+          reply.send("Error")
+      })
 }
 
 const modifyMessage = async (req, reply) => {
-    const id = Number(req.params.id)
-    messages = messages.map(message => {
-        if (message.id === id) {
-            return {
-                id,
-                message: req.body.message
-            }
-        }
-        else {
-            return {
-                id: message.id,
-                message: message.message 
-            }        
-        }
-    })
 
-    return {
+    const id = Number(req.params.id)
+
+    await knex('messages_table')
+    .where('id', '=', id)
+    .update({
+      message: req.body.message
+    })
+    
+    reply.send({
         id,
         message: req.body.message
-    }
+    })
 }
 
 const deleteMessage = async (req, reply) => {
     const id = Number(req.params.id)
-
-    messages = messages.filter(message => message.id !== id)
-    return { msg: `Message ID ${id} deleted` }
+    await knex('messages_table').where({ id: id }).del()
+    reply.send({ msg: `Message ID ${id} deleted` })
 }
 
 module.exports = {
