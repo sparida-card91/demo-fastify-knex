@@ -1,17 +1,18 @@
-//const express = require('express');
-//const bodyParser = require('body-parser');
 const port = 3000;
 const app = require('fastify')({
     logger: true
 })
 
-//app.use(bodyParser.json());
-
 app.get('/', (req, res) => {
-    res.json({
+    res.send({
         message: 'Hello World'
     });
 });
+
+const messageRoutes = require('./routes/messages')
+messageRoutes.forEach((route, index) => {
+    app.route(route)
+})
 
 app.listen(port, (err, address) => {
     if (err) {

@@ -1,5 +1,5 @@
 {
-  "name": "knex-tutorial",
+  "name": "demo-fastify-knex",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,8 +11,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.19.2",
-    "express": "^4.17.3",
     "fastify": "^3.27.4",
     "knex": "^1.0.4",
     "nodemon": "^2.0.15"
