@@ -34,7 +34,7 @@ const addMessage = async (req, reply) => {
     return newMessage
 }
 
-const updateMessage = async (req, reply) => {
+const modifyMessage = async (req, reply) => {
     const id = Number(req.params.id)
     messages = messages.map(message => {
         if (message.id === id) {
@@ -42,6 +42,12 @@ const updateMessage = async (req, reply) => {
                 id,
                 message: req.body.message
             }
+        }
+        else {
+            return {
+                id: message.id,
+                message: message.message 
+            }        
         }
     })
 
@@ -62,6 +68,6 @@ module.exports = {
     getAllMessages,
     getMessage,
     addMessage,
-    updateMessage,
+    modifyMessage,
     deleteMessage
 }

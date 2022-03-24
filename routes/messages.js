@@ -4,7 +4,7 @@ const getMessageValidation = {
     params: {
         id: { type: 'string' }
     },
-    response: {
+    response: { 
         200: {
             type: 'object',
             properties: {
@@ -56,7 +56,7 @@ const routes = [{
     {
         method: 'PUT',
         url: '/api/messages/:id',
-        handler: messageController.updateMessage
+        handler: messageController.modifyMessage
     },
     {
         method: 'DELETE',
