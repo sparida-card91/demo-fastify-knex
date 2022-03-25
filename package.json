@@ -4,12 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "NODE_ENV=test jest --detectOpenHandles",
     "start": "NODE_ENV=development nodemon index.js",
     "migrate": "NODE_ENV=development knex migrate:latest --knexfile knexfile.js",
     "rollback": "NODE_ENV=development knex migrate:rollback --knexfile knexfile.js",
-    "seed": "NODE_ENV=development knex seed:run --knexfile knexfile.js"
-
+    "seed": "NODE_ENV=development knex seed:run --knexfile knexfile.js",
+    "migrate-test": "NODE_ENV=test knex migrate:latest --knexfile knexfile.js",
+    "rollback-test": "NODE_ENV=test knex migrate:rollback --knexfile knexfile.js",
+    "seed-test": "NODE_ENV=test knex seed:run --knexfile knexfile.js"
   },
   "keywords": [],
   "author": "",
