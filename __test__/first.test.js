@@ -3,16 +3,6 @@ const knex = require('knex')(knexConfig[process.env.NODE_ENV])
 const messageController = require('../controller/messages');
 
 beforeAll(async () => {
-    let exists = await knex.schema.hasTable('messages_table')
-    if (exists) {
-        await knex('messages_table').del();
-    } else {
-        await knex.schema
-        .createTable('messages_table', function (table) {
-          table.integer('id').notNullable();
-          table.string('message');
-        });         
-    }
     await knex('messages_table').insert([
         {id: 1, message: 'Test Message 1'},
         {id: 2, message: 'Test Message 2'},
