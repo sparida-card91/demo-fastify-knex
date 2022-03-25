@@ -15,24 +15,15 @@ const getMessage = async (req, reply) => {
 }
 
 const addMessage = async (req, reply) => {
-    let newMessage;
-    knex('messages_table').count('id as CNT')
-      .then((total) => {
-        let id = total[0].CNT + 1
-        console.log("Hello Everyone", id)
-        newMessage = {
-            id,
-            message: req.body.message
-        }
-        return knex('messages_table').insert(newMessage)
-      })
-      .then((result) => {
-        reply.send(result)
-      })
-      .catch((err) => {
-          console.log(err)
-          reply.send("Error")
-      })
+    let total = await knex('messages_table').count('id as CNT')
+    let id = total[0].CNT + 1
+    console.log("Hello ID", id)
+    let newMessage = {
+        id,
+        message: req.body.message
+    }
+    let result = await knex('messages_table').insert(newMessage)
+    reply.send(result)
 }
 
 const modifyMessage = async (req, reply) => {
