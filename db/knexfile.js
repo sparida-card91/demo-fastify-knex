@@ -3,18 +3,23 @@
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
  */
+
+require('../initEnv');
+
 module.exports = {
-  staging: {
-    client: 'mysql',
+  development: {
+    client: 'mysql2',
     connection: {
-      host : 'localhost',
-      port : 3306,
-      user : 'root',
-      password : 'MyRootPa$$word',
-      database : 'mysql_test_db'
+      host : process.env.MYSQL_HOST,
+      port : process.env.MYSQL_PORT,
+      user : process.env.MYSQL_USER,
+      password : process.env.MYSQL_PASSWORD,
+      database : process.env.MYSQL_DB
     },
     migrations: {
       tableName: 'knex_migrations'
     }
   }
 };
+
+

@@ -1,14 +1,5 @@
-
-const knex = require('knex')({
-    client: 'mysql2',
-    connection: {
-      host : '127.0.0.1',
-      port : 3306,
-      user : 'root',
-      password : 'MyRootPa$$word',
-      database : 'mysql_test_db'
-    }
-  });
+const knexConfig = require('../db/knexfile');
+const knex = require('knex')(knexConfig[process.env.NODE_ENV])
 
 const getAllMessages = async (req, reply) => {
     reply.send(
