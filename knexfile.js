@@ -3,8 +3,8 @@
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
  */
-
-require('../initEnv');
+const path = require('path');
+require('./initEnv');
 
 module.exports = {
   development: {
@@ -17,7 +17,11 @@ module.exports = {
       database : process.env.MYSQL_DB
     },
     migrations: {
-      tableName: 'knex_migrations'
+      tableName: 'knex_migrations',
+      directory: `${__dirname}/db/migrations`
+    },
+    seeds: {
+      directory: `${__dirname}/db/seeds`
     }
   }
 };
