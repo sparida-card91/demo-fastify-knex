@@ -3,6 +3,11 @@ const app = require('fastify')({
     logger: true
 })
 
+app.setErrorHandler(function (error, request, reply) {
+    console.log(error) 
+    reply.status(500).send({ message: 'Error in processing request due to db failure' })
+  })
+
 app.get('/', (req, res) => {
     res.send({
         message: 'Hello World'
